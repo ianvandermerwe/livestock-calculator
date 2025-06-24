@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Icon Generator</title>
+</head>
+<body>
+    <h2>Icon Generator for Livestock Calculator</h2>
+    <p>This page generates simple icons for the PWA. Open this in a browser and right-click to save the generated icons.</p>
+    
+    <canvas id="icon192" width="192" height="192" style="border: 1px solid #ccc; margin: 10px;"></canvas>
+    <p>192x192 icon (right-click to save as icon-192x192.png)</p>
+    
+    <canvas id="icon512" width="512" height="512" style="border: 1px solid #ccc; margin: 10px;"></canvas>
+    <p>512x512 icon (right-click to save as icon-512x512.png)</p>
+
+    <script>
+        function drawIcon(canvas, size) {
+            const ctx = canvas.getContext('2d');
+            
+            // Background
+            ctx.fillStyle = '#007AFF';
+            ctx.fillRect(0, 0, size, size);
+            
+            // White circle background
+            ctx.fillStyle = 'white';
+            ctx.beginPath();
+            ctx.arc(size/2, size/2, size * 0.4, 0, 2 * Math.PI);
+            ctx.fill();
+            
+            // Cow emoji-like shape
+            ctx.fillStyle = '#8B4513';
+            ctx.beginPath();
+            ctx.arc(size/2, size/2 - size*0.05, size * 0.25, 0, 2 * Math.PI);
+            ctx.fill();
+            
+            // Spots
+            ctx.fillStyle = 'black';
+            ctx.beginPath();
+            ctx.arc(size/2 - size*0.1, size/2 - size*0.1, size * 0.04, 0, 2 * Math.PI);
+            ctx.fill();
+            
+            ctx.beginPath();
+            ctx.arc(size/2 + size*0.08, size/2 - size*0.05, size * 0.03, 0, 2 * Math.PI);
+            ctx.fill();
+            
+            // Simple text
+            ctx.fillStyle = 'white';
+            ctx.font = `bold ${size * 0.12}px Arial`;
+            ctx.textAlign = 'center';
+            ctx.fillText('🐄', size/2, size/2 + size*0.25);
+        }
+        
+        // Generate icons
+        drawIcon(document.getElementById('icon192'), 192);
+        drawIcon(document.getElementById('icon512'), 512);
+        
+        // Create smaller icons programmatically
+        const sizes = [16, 32, 72, 96, 128, 144, 152, 384];
+        sizes.forEach(size => {
+            const canvas = document.createElement('canvas');
+            canvas.width = size;
+            canvas.height = size;
+            drawIcon(canvas, size);
+            
+            // Convert to blob and create download link
+            canvas.toBlob(blob => {
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = `icon-${size}x${size}.png`;
+                link.textContent = `Download ${size}x${size} icon`;
+                link.style.display = 'block';
+                link.style.margin = '5px';
+                document.body.appendChild(link);
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#007AFF">
+    <meta name="description" content="Calculate livestock weight using heart girth and length measurements">
+    
+    <title>Livestock Weight Calculator</title>
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Apple Touch Icon -->
+    <link rel="apple-touch-icon" href="icons/icon-192x192.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Livestock Calculator">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="icons/icon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="icons/icon-16x16.png">
+    
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🐄 Livestock Weight Calculator</h1>
+            <p class="subtitle">Calculate animal weight using heart girth and length measurements</p>
+        </header>
+
+        <main id="calculator-section">
+            <!-- Animal Selection -->
+            <section class="section">
+                <h2>Select Animal Type</h2>
+                <div class="animal-buttons">
+                    <button class="animal-btn active" data-animal="pig" data-coefficient="400">
+                        🐷 Pig
+                    </button>
+                    <button class="animal-btn" data-animal="cattle" data-coefficient="300">
+                        🐄 Cattle
+                    </button>
+                    <button class="animal-btn" data-animal="sheep" data-coefficient="500">
+                        🐑 Sheep
+                    </button>
+                    <button class="animal-btn" data-animal="goat" data-coefficient="450">
+                        🐐 Goat
+                    </button>
+                </div>
+            </section>
+
+            <!-- Measurements Input -->
+            <section class="section">
+                <h2>Measurements (centimeters)</h2>
+                
+                <div class="input-group">
+                    <label for="heartGirth">Heart Girth</label>
+                    <input type="number" id="heartGirth" placeholder="Enter heart girth measurement" step="0.1" min="0">
+                    <small>Measure around the animal just behind the front legs</small>
+                </div>
+
+                <div class="input-group">
+                    <label for="length">Length</label>
+                    <input type="number" id="length" placeholder="Enter length measurement" step="0.1" min="0">
+                    <small>Measure from base of ears to base of tail</small>
+                </div>
+
+                <button id="calculateBtn" class="calculate-btn">Calculate Weight</button>
+                
+                <!-- Result Display -->
+                <div id="result" class="result-container" style="display: none;">
+                    <div class="result-text">
+                        <strong>Estimated Weight: <span id="weightResult"></span> kg</strong>
+                    </div>
+                    <div class="result-subtext">
+                        Animal: <span id="animalResult"></span>
+                    </div>
+                </div>
+
+                <button id="clearBtn" class="clear-btn">Clear</button>
+            </section>
+        </main>
+
+        <!-- History Section -->
+        <main id="history-section" style="display: none;">
+            <section class="section">
+                <h2>Measurement History</h2>
+                <div id="historyList" class="history-list">
+                    <p class="no-data">No measurements saved yet</p>
+                </div>
+                <button id="clearHistoryBtn" class="clear-history-btn">Clear All History</button>
+            </section>
+        </main>
+
+        <!-- Navigation -->
+        <nav class="bottom-nav">
+            <button id="calculatorTabBtn" class="nav-btn active">
+                📊 Calculator
+            </button>
+            <button id="historyTabBtn" class="nav-btn">
+                📋 History (<span id="historyCount">0</span>)
+            </button>
+        </nav>
+
+        <!-- Instructions Modal -->
+        <div id="instructionsModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>How to Measure</h2>
+                <div class="instruction-item">
+                    <h3>Heart Girth</h3>
+                    <p>Measure around the animal just behind the front legs with a tape measure. This should be the largest circumference of the chest area.</p>
+                </div>
+                <div class="instruction-item">
+                    <h3>Length</h3>
+                    <p>Measure from the base of the ears to the base of the tail along the animal's back.</p>
+                </div>
+                <div class="instruction-item">
+                    <h3>Example Calculation</h3>
+                    <p><strong>Pig with Heart Girth: 127cm and Length: 102cm</strong></p>
+                    <p>Weight = (127 × 127) × 102 ÷ 400 = 4,127 ÷ 2.205 = 114 kg</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Help Button -->
+        <button id="helpBtn" class="help-btn">❓</button>
+
+        <!-- Install Prompt -->
+        <div id="installPrompt" class="install-prompt" style="display: none;">
+            <p>📱 Install this app on your phone for easy field use!</p>
+            <button id="installBtn">Install App</button>
+            <button id="dismissInstallBtn">×</button>
+        </div>
+    </div>
+
+    <!-- Service Worker Registration -->
+    <script src="app.js"></script>
+</body>
+</html>
